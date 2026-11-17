@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS users (
   role        ENUM('admin', 'parent', 'user') NOT NULL DEFAULT 'user',
   role_label  VARCHAR(100)  DEFAULT 'Usuário Gamer',
   avatar      VARCHAR(20)   DEFAULT '🎮',
-  created_at  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at  DATETIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  created_at  DATE  TIME      NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at  DATE TIME      NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
 -- ============================================================
