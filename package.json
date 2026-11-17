@@ -1,0 +1,23 @@
+{
+  "name": "gametech-app",
+  "version": "1.0.0",
+  "description": "Aplicativo oficial da GameTech - Empresa de tecnologia criada por Estefany da Cunha. Jogar é evoluir!",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "gametech",
+    "jogos",
+    "vr",
+    "tecnologia",
+    "segurança-digital",
+    "controle-parental"
+  ],
+  "author": "Estefany da Cunha",
+  "license": "MIT",
+  "dependencies": {
+    "mysql2": "^3.24.6"
+  }
+}
