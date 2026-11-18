@@ -12,18 +12,35 @@ class GameTechApp {
     this.animFrameId = null;
   }
 
-  init() {
-    // Se não houver usuário logado, inicia logado como Admin (Estefany) para melhor experiência de avaliação imediata
+  async init() {
+    // 1. Inicializa o StateManager (detecta MySQL e carrega dados da API se disponível)
+    const dbConnected = await window.gameTechState.init();
+
+    // 2. Se não houver usuário logado, faz login automático como Admin (Estefany)
     if (!window.gameTechState.getCurrentUser()) {
-      const admin = window.gameTechState.getUsers().find(u => u.role === 'admin');
-      if (admin) {
-        window.gameTechState.setCurrentUser(admin);
+      if (dbConnected) {
+        // Login pela API do MySQL
+        await window.gameTechState.loginUser('admin@gametech.com', 'admin');
+      } else {
+        const admin = window.gameTechState.getUsers().find(u => u.role === 'admin');
+        if (admin) window.gameTechState.setCurrentUser(admin);
       }
+    }
+
+    // 3. Carrega pedidos e dados financeiros do MySQL (se conectado)
+    if (dbConnected) {
+      await window.gameTechState.loadOrders();
+      await window.gameTechState.loadFinancialData();
     }
 
     this.initBackgroundCanvas();
     this.renderApp();
     this.initGlobalEventListeners();
+
+    // 4. Exibe indicação de conexão com o banco
+    if (dbConnected) {
+      Components.showToast('Conectado ao banco de dados MySQL! Cadastros e dados são salvos no servidor.', 'success', '🗄️ MySQL Ativo');
+    }
   }
 
   // --- Renderização Principal da Aplicação ---
